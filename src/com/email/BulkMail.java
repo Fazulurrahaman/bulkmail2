@@ -1,16 +1,11 @@
 package com.email;
 
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.mail.Authenticator;
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -37,12 +32,14 @@ public class BulkMail {
 		
 		Message message = prepareMessage(session,MyAccountEmail,recipient);
 		
-		Transport.send(message);
+	Transport.send(message);
 		System.out.println("Message sent");
 		
 	}
+	
+	
 
-	private static Message prepareMessage(Session session,String MyAccountEmail,String recepient) {
+private static Message prepareMessage(Session session, String MyAccountEmail, String recepient) {
 		
 		Message message = new MimeMessage(session);
 		
@@ -51,9 +48,11 @@ public class BulkMail {
 				message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
 				message.setSubject("vfgrt");
 				
+				String[] splittedArray = recepient.split("@");
+				String name = splittedArray[0];
+				System.out.println(name);
 				
-				
-				message.setText("Dear Mr." 
+				message.setText("Dear Mr." +name
 						
 						+ ",\n Greetings To You,\n" 
 						+ "Welcome to my GitHub Account:http//github.com/Fazulurrahaman.\n" 
@@ -62,11 +61,16 @@ public class BulkMail {
 						+ "Harris Infotech Pvt.Ltd,\n" 
 						+ " E-mail:fazuluhit@gmail.com,\n" 
 						+"Phone: +91-6385101136 ");
-			} catch(Exception ex) {
-				Logger.getLogger(BulkMail.class.getName()).log(Level.SEVERE,null,ex);
+			} catch(Exception e) {
+				e.printStackTrace();
 				
 			}	
 		return message;
+	}
+	public void process(String string) {
+	
+		prepareMessage(null, string, string);
+		
 	}
 	
 	
