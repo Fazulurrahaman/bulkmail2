@@ -11,6 +11,12 @@ import javax.mail.internet.MimeMessage;
 
 public class BulkMail {
 	
+	public void process(String string) throws Exception {
+		   sendmail(string);
+		   prepareMessage(null, string, string);
+		   
+		}
+	
 	
 	public static void sendmail( String recipient) throws Exception {
 		
@@ -23,7 +29,7 @@ public class BulkMail {
 		
 		String MyAccountEmail = "fazuluhit@gmail.com";
 		String password = "9789807587";
-		
+	
 		Session session = Session.getInstance(properties,new Authenticator(){
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(MyAccountEmail, password);
@@ -32,14 +38,12 @@ public class BulkMail {
 		
 		Message message = prepareMessage(session,MyAccountEmail,recipient);
 		
-	Transport.send(message);
-		System.out.println("Message sent");
 		
-	}
-	
-	
+		Transport.send(message);
+		
+	}		
 
-private static Message prepareMessage(Session session, String MyAccountEmail, String recepient) {
+public static Message prepareMessage(Session session, String MyAccountEmail, String recepient) {
 		
 		Message message = new MimeMessage(session);
 		
@@ -50,7 +54,7 @@ private static Message prepareMessage(Session session, String MyAccountEmail, St
 				
 				String[] splittedArray = recepient.split("@");
 				String name = splittedArray[0];
-				System.out.println(name);
+			//	System.out.println("Message sent to..:"+name);
 				
 				message.setText("Dear Mr." +name
 						
@@ -61,17 +65,15 @@ private static Message prepareMessage(Session session, String MyAccountEmail, St
 						+ "Harris Infotech Pvt.Ltd,\n" 
 						+ " E-mail:fazuluhit@gmail.com,\n" 
 						+"Phone: +91-6385101136 ");
+				
 			} catch(Exception e) {
 				e.printStackTrace();
 				
 			}	
+			
 		return message;
 	}
-	public void process(String string) {
 	
-		prepareMessage(null, string, string);
-		
-	}
 	
 	
 }
